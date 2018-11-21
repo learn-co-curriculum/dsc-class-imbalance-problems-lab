@@ -49,7 +49,7 @@ As a baseline, fit a cookie cutter out of the box logistic regression model. The
 #Your code here
 ```
 
-# Tuning 
+## Tuning 
 Try some of the various techniques proposed to tune your model. Compare your models using AUC, ROC or another metric.
 
 
@@ -165,7 +165,7 @@ plt.show()
 ![png](index_files/index_14_1.png)
 
 
-# Your response here
+## Your response here
 
 ## Summary
 
