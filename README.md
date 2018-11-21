@@ -349,7 +349,7 @@ plot_confusion_matrix(cnf_matrix, classes=[0,1])
 ![png](index_files/index_12_1.png)
 
 
-# Tuning 
+## Tuning 
 Try some of the various techniques proposed to tune your model. Compare your models using AUC, ROC or another metric.
 
 
