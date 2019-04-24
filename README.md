@@ -4,7 +4,8 @@
 ## Introduction
 
 
-Now that we've discussed some techniques for tuning classifcation models on imbalanced datasets, its time to practice those techniques. In this lab you'll investigate credit card fraud and attempt to tune a model to flag suspicious activity.
+Now that you've gone over some techniques for tuning classification models on imbalanced datasets, its time to practice those techniques. In this lab, you'll investigate credit card fraud and attempt to tune a model to flag suspicious activity.
+
 
 ## Objectives
 
@@ -215,7 +216,7 @@ df.head()
 
 ## Preview the class imbalance
 
-You should see that the dataset has 31 columns. The first is a time field, followed by V1-V28; manual feature engineering done on the backend that we have little information about. Finally, we have the amount of the purchase and a binary Class flag. This last column, Class, is the indication of whether or not the purchase was fradulent, and is the feature we are attempting to predict.
+You should see that the dataset has 31 columns. The first is a time field followed by V1-V28, created by way of manual feature engineering done on the backend that we have little information about. Finally, there's the amount of the purchase and a binary Class flag. This last column, Class, is the indication of whether or not the purchase was fraudulent, and it is the feature you should be attempting to predict.
 
 Take a look at how imbalanced this dataset is.
 
@@ -265,7 +266,7 @@ As a baseline, fit a cookie cutter out of the box logistic regression model. The
 
 ```python
 #Initial Model
-logreg = LogisticRegression(fit_intercept = False)
+logreg = LogisticRegression(fit_intercept = False,solver='lbfgs')
 
 #Probability scores for test set
 y_score = logreg.fit(X_train, y_train).decision_function(X_test)
@@ -292,11 +293,15 @@ plt.legend(loc="lower right")
 plt.show()
 ```
 
-    AUC: 0.8841414375885128
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
+    AUC: 0.8889758776249027
 
 
 
-![png](index_files/index_10_1.png)
+![png](index_files/index_10_2.png)
 
 
 
@@ -341,8 +346,8 @@ plot_confusion_matrix(cnf_matrix, classes=[0,1])
 ```
 
     Confusion matrix, without normalization
-    [[71026    53]
-     [   56    67]]
+    [[71010    47]
+     [   72    73]]
 
 
 
@@ -363,7 +368,7 @@ plt.figure(figsize=(10,8))
 
 for n, c in enumerate(C_param_range):
     #Fit a model
-    logreg = LogisticRegression(fit_intercept = False, C = c) #Starter code
+    logreg = LogisticRegression(fit_intercept = False, C = c,solver='lbfgs') #Starter code
     model_log = logreg.fit(X_train, y_train)
     print(model_log) #Preview model params
 
@@ -391,40 +396,110 @@ plt.legend(loc="lower right")
 plt.show()
 ```
 
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
     LogisticRegression(C=0.001, class_weight=None, dual=False,
               fit_intercept=False, intercept_scaling=1, max_iter=100,
-              multi_class='ovr', n_jobs=1, penalty='l2', random_state=None,
-              solver='liblinear', tol=0.0001, verbose=0, warm_start=False)
-    AUC for 0.001: 0.8397641690817177
+              multi_class='warn', n_jobs=None, penalty='l2', random_state=None,
+              solver='lbfgs', tol=0.0001, verbose=0, warm_start=False)
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
+    AUC for 0.001: 0.8366532080320381
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
     LogisticRegression(C=0.01, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.01: 0.8817812526377986
+              intercept_scaling=1, max_iter=100, multi_class='warn',
+              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
+              tol=0.0001, verbose=0, warm_start=False)
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
+    AUC for 0.01: 0.881132119711507
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
     LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.1: 0.8839373305947121
+              intercept_scaling=1, max_iter=100, multi_class='warn',
+              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
+              tol=0.0001, verbose=0, warm_start=False)
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
+    AUC for 0.1: 0.8848807246091369
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
     LogisticRegression(C=1, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 1: 0.8841414375885128
+              intercept_scaling=1, max_iter=100, multi_class='warn',
+              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
+              tol=0.0001, verbose=0, warm_start=False)
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
+    AUC for 1: 0.8889758776249027
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
     LogisticRegression(C=10, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 10: 0.8841610159158905
+              intercept_scaling=1, max_iter=100, multi_class='warn',
+              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
+              tol=0.0001, verbose=0, warm_start=False)
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
+    AUC for 10: 0.8885478508389372
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
     LogisticRegression(C=100, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 100: 0.8841628916837829
+              intercept_scaling=1, max_iter=100, multi_class='warn',
+              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
+              tol=0.0001, verbose=0, warm_start=False)
+
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
+      "of iterations.", ConvergenceWarning)
+
+
+    AUC for 100: 0.8892335612391322
 
 
 
-![png](index_files/index_14_1.png)
+![png](index_files/index_14_24.png)
 
 
 
@@ -434,8 +509,8 @@ plot_confusion_matrix(cnf_matrix, classes=[0,1])
 ```
 
     Confusion matrix, without normalization
-    [[71034    48]
-     [   48    72]]
+    [[71010    47]
+     [   72    73]]
 
 
 
@@ -557,8 +632,8 @@ plot_confusion_matrix(cnf_matrix, classes=[0,1])
 ```
 
     Confusion matrix, without normalization
-    [[71026    53]
-     [   56    67]]
+    [[71010    47]
+     [   72    73]]
 
 
 
@@ -665,8 +740,8 @@ plt.show()
 ![png](index_files/index_21_1.png)
 
 
-This ROC curve is misleading because the test set was also manipulated using SMOTE. This produces results that will not be comparable to future cases as we have synthetically created test cases. SMOTE should only be applied to training sets, and then from there an accuracte gauge can be made on the model's performance by using a raw test sample that has not been oversampled or undersampled.
+This ROC curve is misleading because the test set was also manipulated using SMOTE. This produces results that will not be comparable to future cases as we have synthetically created test cases. SMOTE should only be applied to training sets, and then from there an accurate gauge can be made on the model's performance by using a raw test sample that has not been oversampled or undersampled.
 
 ## Summary
 
-In this lab you got some hands on practice tuning logistic regression models using various techniques and parameters. In the upcoming labs and lessons we will continue to dig into the underlying mathematics of logistic regression, taking on a statistical point of view and providing you with a deeper understanding of how the algorithm works. This should give you further insight as to how to tune and apply these models going forward.
+In this lab, you got some hands-on practice tuning logistic regression models using various techniques and parameters. In the upcoming labs and lessons, you will continue to dig into the underlying mathematics of logistic regression, taking on a statistical point of view and providing you with a deeper understanding of how the algorithm works. This should give you further insight as to how to tune and apply these models going forward.
