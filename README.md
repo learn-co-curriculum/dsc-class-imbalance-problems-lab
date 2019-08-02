@@ -6,7 +6,6 @@
 
 Now that you've gone over some techniques for tuning classification models on imbalanced datasets, its time to practice those techniques. In this lab, you'll investigate credit card fraud and attempt to tune a model to flag suspicious activity.
 
-
 ## Objectives
 
 You will be able to:
@@ -34,6 +33,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 %matplotlib inline
 ```
+
+    Using TensorFlow backend.
+
 
 
 ```python
@@ -266,7 +268,7 @@ As a baseline, fit a cookie cutter out of the box logistic regression model. The
 
 ```python
 #Initial Model
-logreg = LogisticRegression(fit_intercept = False,solver='lbfgs')
+logreg = LogisticRegression(fit_intercept = False,solver='liblinear')
 
 #Probability scores for test set
 y_score = logreg.fit(X_train, y_train).decision_function(X_test)
@@ -293,15 +295,11 @@ plt.legend(loc="lower right")
 plt.show()
 ```
 
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
-    AUC: 0.8889758776249027
+    AUC: 0.8841414375885128
 
 
 
-![png](index_files/index_10_2.png)
+![png](index_files/index_10_1.png)
 
 
 
@@ -346,8 +344,8 @@ plot_confusion_matrix(cnf_matrix, classes=[0,1])
 ```
 
     Confusion matrix, without normalization
-    [[71010    47]
-     [   72    73]]
+    [[71026    53]
+     [   56    67]]
 
 
 
@@ -368,7 +366,7 @@ plt.figure(figsize=(10,8))
 
 for n, c in enumerate(C_param_range):
     #Fit a model
-    logreg = LogisticRegression(fit_intercept = False, C = c,solver='lbfgs') #Starter code
+    logreg = LogisticRegression(fit_intercept = False, C = c,solver='liblinear') #Starter code
     model_log = logreg.fit(X_train, y_train)
     print(model_log) #Preview model params
 
@@ -396,110 +394,46 @@ plt.legend(loc="lower right")
 plt.show()
 ```
 
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
-    LogisticRegression(C=0.001, class_weight=None, dual=False,
-              fit_intercept=False, intercept_scaling=1, max_iter=100,
-              multi_class='warn', n_jobs=None, penalty='l2', random_state=None,
-              solver='lbfgs', tol=0.0001, verbose=0, warm_start=False)
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
-    AUC for 0.001: 0.8366532080320381
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
+    LogisticRegression(C=0.001, class_weight=None, dual=False, fit_intercept=False,
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.001: 0.8397641690817178
     LogisticRegression(C=0.01, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='warn',
-              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
-              tol=0.0001, verbose=0, warm_start=False)
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
-    AUC for 0.01: 0.881132119711507
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.01: 0.8817812526377986
     LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='warn',
-              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
-              tol=0.0001, verbose=0, warm_start=False)
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
-    AUC for 0.1: 0.8848807246091369
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.1: 0.8839373305947121
     LogisticRegression(C=1, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='warn',
-              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
-              tol=0.0001, verbose=0, warm_start=False)
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
-    AUC for 1: 0.8889758776249027
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 1: 0.8841414375885128
     LogisticRegression(C=10, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='warn',
-              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
-              tol=0.0001, verbose=0, warm_start=False)
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
-    AUC for 10: 0.8885478508389372
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 10: 0.8841610159158905
     LogisticRegression(C=100, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='warn',
-              n_jobs=None, penalty='l2', random_state=None, solver='lbfgs',
-              tol=0.0001, verbose=0, warm_start=False)
-
-
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:758: ConvergenceWarning: lbfgs failed to converge. Increase the number of iterations.
-      "of iterations.", ConvergenceWarning)
-
-
-    AUC for 100: 0.8892335612391322
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 100: 0.8841628916837829
 
 
 
-![png](index_files/index_14_24.png)
+![png](index_files/index_14_1.png)
 
 
 
@@ -509,8 +443,8 @@ plot_confusion_matrix(cnf_matrix, classes=[0,1])
 ```
 
     Confusion matrix, without normalization
-    [[71010    47]
-     [   72    73]]
+    [[71026    53]
+     [   56    67]]
 
 
 
@@ -546,7 +480,7 @@ plt.figure(figsize=(10,8))
 
 for n, c in enumerate(C_param_range):
     #Fit a model
-    logreg = LogisticRegression(fit_intercept = False, C = c) #Starter code
+    logreg = LogisticRegression(fit_intercept = False, C = c, solver='liblinear') #Starter code
     model_log = logreg.fit(X_train_resampled, y_train_resampled)
     print(model_log) #Preview model params
 
@@ -574,51 +508,60 @@ plt.legend(loc="lower right")
 plt.show()
 ```
 
-    LogisticRegression(C=0.005, class_weight=None, dual=False,
-              fit_intercept=False, intercept_scaling=1, max_iter=100,
-              multi_class='ovr', n_jobs=1, penalty='l2', random_state=None,
-              solver='liblinear', tol=0.0001, verbose=0, warm_start=False)
-    AUC for 0.005: 0.9743261303846261
+    LogisticRegression(C=0.005, class_weight=None, dual=False, fit_intercept=False,
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.005: 0.9676520309876857
     LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.1: 0.974237734822693
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.1: 0.9684515770518558
     LogisticRegression(C=0.2, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.2: 0.9656378079776408
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.2: 0.968451342580869
     LogisticRegression(C=0.5, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.5: 0.9741281196364762
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.5: 0.9676921255263874
     LogisticRegression(C=0.8, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.8: 0.9639382450315598
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.8: 0.9684507564034027
     LogisticRegression(C=1, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 1: 0.9743316404528104
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 1: 0.9676922427618806
     LogisticRegression(C=1.25, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 1.25: 0.9743689213396733
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 1.25: 0.9676922427618806
     LogisticRegression(C=1.5, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 1.5: 0.9640529013439877
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 1.5: 0.9684508736388959
     LogisticRegression(C=2, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 2: 0.9741676279977115
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 2: 0.9676922427618806
 
 
 
@@ -632,8 +575,8 @@ plot_confusion_matrix(cnf_matrix, classes=[0,1])
 ```
 
     Confusion matrix, without normalization
-    [[71010    47]
-     [   72    73]]
+    [[69795    13]
+     [ 1287   107]]
 
 
 
@@ -660,7 +603,7 @@ plt.figure(figsize=(10,8))
 
 for n, c in enumerate(C_param_range):
     #Fit a model
-    logreg = LogisticRegression(fit_intercept = False, C = c) #Starter code
+    logreg = LogisticRegression(fit_intercept = False, C = c, solver='liblinear') #Starter code
     model_log = logreg.fit(X_train, y_train)
     print(model_log) #Preview model params
 
@@ -694,53 +637,70 @@ plt.show()
     1    284315
     0    284315
     dtype: int64
-    LogisticRegression(C=0.005, class_weight=None, dual=False,
-              fit_intercept=False, intercept_scaling=1, max_iter=100,
-              multi_class='ovr', n_jobs=1, penalty='l2', random_state=None,
-              solver='liblinear', tol=0.0001, verbose=0, warm_start=False)
-    AUC for 0.005: 0.9889222836885252
+    LogisticRegression(C=0.005, class_weight=None, dual=False, fit_intercept=False,
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.005: 0.9899397210291774
     LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.1: 0.9889243265712433
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.1: 0.9899421704695066
     LogisticRegression(C=0.2, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.2: 0.9889243770445593
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.2: 0.9899422225262989
     LogisticRegression(C=0.3, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.3: 0.9889243972338857
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.3: 0.9899422415280181
     LogisticRegression(C=0.5, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.5: 0.9889244075264833
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.5: 0.9899422522164848
     LogisticRegression(C=0.6, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.6: 0.9889244102975672
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.6: 0.9899422579565875
     LogisticRegression(C=0.7, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.7: 0.9889244188087539
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.7: 0.989942264092559
     LogisticRegression(C=0.8, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.8: 0.9889244061409412
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.8: 0.9899422623111479
 
 
 
 ![png](index_files/index_21_1.png)
 
 
-This ROC curve is misleading because the test set was also manipulated using SMOTE. This produces results that will not be comparable to future cases as we have synthetically created test cases. SMOTE should only be applied to training sets, and then from there an accurate gauge can be made on the model's performance by using a raw test sample that has not been oversampled or undersampled.
+## Your response here
+
+
+```python
+
+# This ROC curve is misleading because the test set was also manipulated using SMOTE. 
+# This produces results that will not be comparable to future cases as we have synthetically created test cases. 
+# SMOTE should only be applied to training sets, and then from there an accurate gauge can be made on the model's performance 
+# by using a raw test sample that has not been oversampled or undersampled.
+```
 
 ## Summary
 
