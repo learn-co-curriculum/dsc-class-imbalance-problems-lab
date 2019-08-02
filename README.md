@@ -85,7 +85,7 @@ plt.figure(figsize=(10,8))
 
 for n, c in enumerate(C_param_range):
     #Fit a model
-    logreg = LogisticRegression(fit_intercept = False, C = c) #Starter code
+    logreg = LogisticRegression(fit_intercept = False, C = c, solver='liblinear') #Starter code
     model_log = logreg.fit(X_train, y_train)
     print(model_log) #Preview model params
 
@@ -119,46 +119,54 @@ plt.show()
     1    284315
     0    284315
     dtype: int64
-    LogisticRegression(C=0.005, class_weight=None, dual=False,
-              fit_intercept=False, intercept_scaling=1, max_iter=100,
-              multi_class='ovr', n_jobs=1, penalty='l2', random_state=None,
-              solver='liblinear', tol=0.0001, verbose=0, warm_start=False)
-    AUC for 0.005: 0.9889222836885252
+    LogisticRegression(C=0.005, class_weight=None, dual=False, fit_intercept=False,
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.005: 0.992261982457822
     LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.1: 0.9889243265712433
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.1: 0.9922559800919245
     LogisticRegression(C=0.2, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.2: 0.9889243770445593
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.2: 0.9922558300575188
     LogisticRegression(C=0.3, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.3: 0.9889243972338857
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.3: 0.9922557706771471
     LogisticRegression(C=0.5, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.5: 0.9889244075264833
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.5: 0.9922557397993539
     LogisticRegression(C=0.6, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.6: 0.9889244102975672
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.6: 0.9922557241625228
     LogisticRegression(C=0.7, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.7: 0.9889244188087539
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.7: 0.9922557247563264
     LogisticRegression(C=0.8, class_weight=None, dual=False, fit_intercept=False,
-              intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-              penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-              verbose=0, warm_start=False)
-    AUC for 0.8: 0.9889244061409412
+                       intercept_scaling=1, l1_ratio=None, max_iter=100,
+                       multi_class='warn', n_jobs=None, penalty='l2',
+                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
+                       warm_start=False)
+    AUC for 0.8: 0.9922557053587383
 
 
 
