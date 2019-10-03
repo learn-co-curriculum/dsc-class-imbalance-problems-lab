@@ -13,7 +13,7 @@ You will be able to:
 * Understand the complications of class imbalance problems
 
 ## Predicting Credit Card Fraud
-Load the **creditcard.csv.gz** file and preview the data. To load a compressed csv use the optional parameter compression='gzip' within pandas read_csv method as in: `pd.read_csv(filename, compression='gzip')`.
+Load the **creditcard.csv.gz** file and preview the data. To load a compressed csv, use the optional parameter `compression='gzip'` within pandas read_csv method as in: `pd.read_csv(filename, compression='gzip')`.
 
 
 ```python
