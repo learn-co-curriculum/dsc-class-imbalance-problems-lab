@@ -13,7 +13,7 @@ You will be able to:
 * Understand the complications of class imbalance problems
 
 ## Predicting Credit Card Fraud
-Load the **creditcard.csv.gz** file and preview the data. To load a compressed csv use the optional parameter compression='gzip' within pandas read_csv method as in: `pd.read_csv(filename, compression='gzip')`.
+Load the **creditcard.csv.gz** file and preview the data. To load a compressed csv, use the optional parameter `compression='gzip'` within pandas read_csv method as in: `pd.read_csv(filename, compression='gzip')`.
 
 
 ```python
@@ -848,7 +848,7 @@ plt.show()
 
 # This ROC curve is misleading because the test set was also manipulated using SMOTE. 
 # This produces results that will not be comparable to future cases as we have synthetically created test cases. 
-# SMOTE should only be applied to training sets, and then from there an accurate gauge can be made on the model's performance 
+# SMOTE should only be applied to training sets, and then from there, an accurate gauge can be made on the model's performance 
 # by using a raw test sample that has not been oversampled or undersampled.
 ```
 
