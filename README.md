@@ -9,97 +9,184 @@ Now that you've gone over some techniques for tuning classification models on im
 ## Objectives
 
 You will be able to:
-* Use modified sampling techniques to address class imbalance problems
-* Understand the complications of class imbalance problems
 
-## Predicting Credit Card Fraud
-Load the **creditcard.csv.gz** file and preview the data. To load a compressed csv, use the optional parameter `compression='gzip'` within pandas read_csv method as in: `pd.read_csv(filename, compression='gzip')`.
+- Use sampling techniques to address a class imbalance problem within a dataset 
+- Create a visualization of ROC curves and use it to assess a model
+
+## Predicting credit card fraud
+
+
+The following cell loads all the functions you will be using in this lab. All you need to do is run it: 
 
 
 ```python
-#Your code here
+import pandas as pd
+import numpy as np
+import itertools
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+from sklearn.metrics import roc_curve, auc
+from sklearn.metrics import confusion_matrix
+
+from imblearn.over_sampling import SMOTE, ADASYN
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+```
+
+Use Pandas to load the compressed CSV file, `'creditcard.csv.gz'`. 
+
+> Note: You need to pass an additional argument (`compression='gzip'`) to read_csv() in order to load compressed CSV files. 
+
+
+```python
+# Load a compressed csv file
+df = None
+
+# Print the first five rows of data
+
 ```
 
 ## Preview the class imbalance
 
-You should see that the dataset has 31 columns. The first is a time field followed by V1-V28, created by way of manual feature engineering done on the backend that we have little information about. Finally, there's the amount of the purchase and a binary Class flag. This last column, Class, is the indication of whether or not the purchase was fraudulent, and it is what you should be attempting to predict.
+Did you notice that the dataset has 31 columns? The first is a time field followed by columns V1 - V28, created by way of manual feature engineering done on the backend that we have little information about. Finally, there's the amount of the purchase and a binary `'Class'` flag. This last column, `'Class'`, is the indication of whether or not the purchase was fraudulent, and it is what you should be attempting to predict.
 
-Take a look at how imbalanced this dataset is.
+Take a look at how imbalanced this dataset is: 
 
 
 ```python
-#Your code here
+# Count the number of fraudulent/infraudulent purchases
+
 ```
 
-## Define the Problem
+## Define the predictor and target variables
 
-Define X and y and perform a standard train test split.
+Define `X` and `y` and perform a standard train-test split. Assign 25% to the test set and `random_state` to 0. 
 
 
 ```python
-#Your code here
+# Your code here
+y = None
+X = None
+X_train, X_test, y_train, y_test = None
+```
+
+Find the class imbalance in the training and test sets: 
+
+
+```python
+# Training set
+
+print('\n')
+# Test set
+
 ```
 
 ## Create an initial model
 
-As a baseline, fit a cookie cutter out of the box logistic regression model. Then plot the ROC curve and print out the AUC. We'll use this as a comparison for how our future models perform.
+As a baseline, train a vanilla logistic regression model. Then plot the ROC curve and print out the AUC. We'll use this as a comparison for how our future models perform.
 
 
 ```python
-#Your code here
+# Initial Model
+logreg = None
+
+# Probability scores for test set
+y_score = None
+# False positive rate and true positive rate
+fpr, tpr, thresholds = None
+
+# Seaborn's beautiful styling
+sns.set_style('darkgrid', {'axes.facecolor': '0.9'})
+
+# Print AUC
+
+
+# Plot the ROC curve
+plt.figure(figsize=(10, 8))
+
 ```
 
-## Tuning 
-Try some of the various techniques proposed to tune your model. Compare your models using AUC, ROC or another metric.
+Here is the function to plot a confusion matrix you defined in an earlier lesson. Use it to plot the confusion matrix of the test set: 
 
 
 ```python
-#Your code here
+# Plot a confusion matrix
+def plot_confusion_matrix(cm, classes,
+                          normalize=False,
+                          title='Confusion matrix',
+                          cmap=plt.cm.Blues):
+    #Add Normalization Option
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print('Normalized confusion matrix')
+    else:
+        print('Confusion matrix, without normalization')
+
+    print(cm)
+
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45)
+    plt.yticks(tick_marks, classes)
+
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        plt.text(j, i, format(cm[i, j], fmt),
+                 horizontalalignment='center',
+                 color='white' if cm[i, j] > thresh else 'black')
+
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
 ```
 
-### SMOTE
-If you haven't already, try using the SMOTE class from the imblearn package in order to improve the model's performance on the minority class.
-
 
 ```python
-#Your code here
+# Plot confusion matrix of the test set 
+y_hat_test = None
+cnf_matrix = None
+
 ```
 
-## Analysis
-Describe what is misleading about the AUC score and ROC curves produced by this code:
+## Tune the model 
+
+Try some of the various techniques proposed to tune your model. Compare your models using AUC and ROC curve.
 
 
 ```python
-print(y.value_counts()) #Previous original class distribution
-X_resampled, y_resampled = SMOTE().fit_sample(X, y) 
-print(pd.Series(y_resampled).value_counts()) #Preview synthetic sample class distribution
-
-X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, random_state=0)
-
 # Now let's compare a few different regularization performances on the dataset:
-C_param_range = [0.005, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8]
-names = [0.005, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 0.9]
-colors = sns.color_palette("Set2", n_colors=len(names))
+C_param_range = [0.001, 0.01, 0.1, 1, 10, 100]
+names = [0.001, 0.01, 0.1, 1, 10, 100]
+colors = sns.color_palette('Set2')
 
-plt.figure(figsize=(10,8))
+plt.figure(figsize=(10, 8))
 
 for n, c in enumerate(C_param_range):
-    #Fit a model
-    logreg = LogisticRegression(fit_intercept = False, C = c, solver='liblinear') #Starter code
-    model_log = logreg.fit(X_train, y_train)
-    print(model_log) #Preview model params
+    # Fit a model
+    logreg = None
+    model_log = None
+    print(model_log) # Preview model params
 
-    #Predict
-    y_hat_test = logreg.predict(X_test)
+    # Predict
+    y_hat_test = None
 
-    y_score = logreg.fit(X_train, y_train).decision_function(X_test)
+    y_score = None
 
-    fpr, tpr, thresholds = roc_curve(y_test, y_score)
+    fpr, tpr, thresholds = None
     
     print('AUC for {}: {}'.format(names[n], auc(fpr, tpr)))
+    print('-------------------------------------------------------')
     lw = 2
     plt.plot(fpr, tpr, color=colors[n],
              lw=lw, label='ROC curve Normalization Weight: {}'.format(names[n]))
+
 plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
 plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
@@ -109,72 +196,106 @@ plt.xticks([i/20.0 for i in range(21)])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Receiver operating characteristic (ROC) Curve')
-plt.legend(loc="lower right")
+plt.legend(loc='lower right')
 plt.show()
 ```
 
-    0    284315
-    1       492
-    Name: Class, dtype: int64
-    1    284315
-    0    284315
-    dtype: int64
-    LogisticRegression(C=0.005, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.005: 0.992261982457822
-    LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.1: 0.9922559800919245
-    LogisticRegression(C=0.2, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.2: 0.9922558300575188
-    LogisticRegression(C=0.3, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.3: 0.9922557706771471
-    LogisticRegression(C=0.5, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.5: 0.9922557397993539
-    LogisticRegression(C=0.6, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.6: 0.9922557241625228
-    LogisticRegression(C=0.7, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.7: 0.9922557247563264
-    LogisticRegression(C=0.8, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.8: 0.9922557053587383
+### SMOTE
+
+Use the `SMOTE` class from the `imblearn` package in order to improve the model's performance on the minority class. 
+
+
+```python
+# Previous original class distribution
+print(y_train.value_counts())
+
+# Fit SMOTE to training data
+X_train_resampled, y_train_resampled = None
+
+# Preview synthetic sample class distribution
+print('\n')
+print(pd.Series(y_train_resampled).value_counts()) 
+```
+
+Similar to what you did above, build models with this resampled training data: 
+
+
+```python
+# Now let's compare a few different regularization performances on the dataset
+C_param_range = [0.005, 0.1, 0.2, 0.5, 0.8, 1, 1.25, 1.5, 2]
+names = [0.005, 0.1, 0.2, 0.5, 0.8, 1, 1.25, 1.5, 2]
+colors = sns.color_palette('Set2', n_colors=len(names))
+
+plt.figure(figsize=(10, 8))
+
+# Write a for loop that builds models for each value of C_param_range, prints the AUC and plots the ROC
 
 
 
-![png](index_files/index_14_1.png)
+plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.yticks([i/20.0 for i in range(21)])
+plt.xticks([i/20.0 for i in range(21)])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic (ROC) Curve')
+plt.legend(loc='lower right')
+plt.show()
+```
 
+## Something wrong here? 
+Describe what is misleading about the AUC score and ROC curves produced by this code:
+
+
+```python
+# Previous original class distribution
+print(y.value_counts()) 
+X_resampled, y_resampled = SMOTE().fit_sample(X, y) 
+# Preview synthetic sample class distribution
+print('---------------------------------')
+print(pd.Series(y_resampled).value_counts()) 
+
+# Split resampled data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, random_state=0)
+
+# Now let's compare a few different regularization performances on the dataset:
+C_param_range = [0.005, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8]
+names = [0.005, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 0.9]
+colors = sns.color_palette('Set2', n_colors=len(names))
+
+plt.figure(figsize=(10, 8))
+
+for n, c in enumerate(C_param_range):
+    # Fit a model
+    logreg = LogisticRegression(fit_intercept=False, C=c, solver='liblinear')
+    model_log = logreg.fit(X_train, y_train)
+
+    # Predict
+    y_hat_test = logreg.predict(X_test)
+
+    y_score = logreg.fit(X_train, y_train).decision_function(X_test)
+
+    fpr, tpr, thresholds = roc_curve(y_test, y_score)
+    print('----------------------------------------------')
+    print('AUC for {}: {}'.format(names[n], auc(fpr, tpr)))
+    lw = 2
+    plt.plot(fpr, tpr, color=colors[n],
+             lw=lw, label='ROC curve Normalization Weight: {}'.format(names[n]))
+plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.yticks([i/20.0 for i in range(21)])
+plt.xticks([i/20.0 for i in range(21)])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic (ROC) Curve')
+plt.legend(loc='lower right')
+plt.show()
+```
 
 ## Your response here
 
 ## Summary
 
-In this lab, you got some hands-on practice tuning logistic regression models using various techniques and parameters. In the upcoming labs and lessons, you will continue to dig into the underlying mathematics of logistic regression, taking on a statistical point of view and providing you with a deeper understanding of how the algorithm works. This should give you further insight as to how to tune and apply these models going forward.
+In this lab, you got some hands-on practice tuning logistic regression models. In the upcoming labs and lessons, you will continue to dig into the underlying mathematics of logistic regression, taking on a statistical point of view and providing you with a deeper understanding of how the algorithm works. This should give you further insight as to how to tune and apply these models going forward.
