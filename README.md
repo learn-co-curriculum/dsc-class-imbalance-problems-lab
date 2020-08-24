@@ -28,7 +28,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 from sklearn.metrics import roc_curve, auc
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, plot_confusion_matrix
 
 from imblearn.over_sampling import SMOTE, ADASYN
 
@@ -94,7 +94,7 @@ df.head()
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
+      <td>0</td>
       <td>0.0</td>
       <td>-1.359807</td>
       <td>-0.072781</td>
@@ -118,7 +118,7 @@ df.head()
       <td>0</td>
     </tr>
     <tr>
-      <th>1</th>
+      <td>1</td>
       <td>0.0</td>
       <td>1.191857</td>
       <td>0.266151</td>
@@ -142,7 +142,7 @@ df.head()
       <td>0</td>
     </tr>
     <tr>
-      <th>2</th>
+      <td>2</td>
       <td>1.0</td>
       <td>-1.358354</td>
       <td>-1.340163</td>
@@ -166,7 +166,7 @@ df.head()
       <td>0</td>
     </tr>
     <tr>
-      <th>3</th>
+      <td>3</td>
       <td>1.0</td>
       <td>-0.966272</td>
       <td>-0.185226</td>
@@ -190,7 +190,7 @@ df.head()
       <td>0</td>
     </tr>
     <tr>
-      <th>4</th>
+      <td>4</td>
       <td>2.0</td>
       <td>-1.158233</td>
       <td>0.877737</td>
@@ -317,58 +317,20 @@ plt.show()
 ![png](index_files/index_12_1.png)
 
 
-Here is the function to plot a confusion matrix you defined in an earlier lesson. Use it to plot the confusion matrix of the test set: 
+Use scikit-learn's `plot_confusion_matrix` function to plot the confusion matrix of the test set: 
 
 
 ```python
-# Plot a confusion matrix
-def plot_confusion_matrix(cm, classes,
-                          normalize=False,
-                          title='Confusion matrix',
-                          cmap=plt.cm.Blues):
-    #Add Normalization Option
-    if normalize:
-        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-        print('Normalized confusion matrix')
-    else:
-        print('Confusion matrix, without normalization')
-
-    print(cm)
-
-    plt.imshow(cm, interpolation='nearest', cmap=cmap)
-    plt.title(title)
-    plt.colorbar()
-    tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation=45)
-    plt.yticks(tick_marks, classes)
-
-    fmt = '.2f' if normalize else 'd'
-    thresh = cm.max() / 2.
-    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-        plt.text(j, i, format(cm[i, j], fmt),
-                 horizontalalignment='center',
-                 color='white' if cm[i, j] > thresh else 'black')
-
-    plt.tight_layout()
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
+# Plot confusion matrix of the test set
+plot_confusion_matrix(logreg, X_test, y_test,
+                      display_labels=["not fraud", "fraud"],
+                      values_format=".5g")
+plt.grid(False) # removes the annoying grid lines from plot
+plt.show()
 ```
 
 
-```python
-# Plot confusion matrix of the test set 
-y_hat_test = logreg.predict(X_test)
-cnf_matrix = confusion_matrix(y_hat_test, y_test)
-plot_confusion_matrix(cnf_matrix, classes=[0, 1])
-```
-
-    Confusion matrix, without normalization
-    [[71026    53]
-     [   56    67]]
-
-
-
-![png](index_files/index_15_1.png)
+![png](index_files/index_14_0.png)
 
 
 ## Tune the model 
@@ -418,42 +380,42 @@ plt.show()
 
     LogisticRegression(C=0.001, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
     AUC for 0.001: 0.8397641690817178
     -------------------------------------------------------
     LogisticRegression(C=0.01, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
     AUC for 0.01: 0.8817812526377986
     -------------------------------------------------------
     LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
     AUC for 0.1: 0.8839373305947121
     -------------------------------------------------------
     LogisticRegression(C=1, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
     AUC for 1: 0.8841414375885128
     -------------------------------------------------------
     LogisticRegression(C=10, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
     AUC for 10: 0.8841610159158905
     -------------------------------------------------------
     LogisticRegression(C=100, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
     AUC for 100: 0.8841628916837829
@@ -461,7 +423,7 @@ plt.show()
 
 
 
-![png](index_files/index_17_1.png)
+![png](index_files/index_16_1.png)
 
 
 ### SMOTE
@@ -474,11 +436,15 @@ Use the `SMOTE` class from the `imblearn` package in order to improve the model'
 print(y_train.value_counts()) 
 
 # Fit SMOTE to training data
-X_train_resampled, y_train_resampled = SMOTE().fit_sample(X_train, y_train) 
+X_train_resampled, y_train_resampled = SMOTE().fit_resample(X_train, y_train) 
 
 # Preview synthetic sample class distribution
 print('\n')
 print(pd.Series(y_train_resampled).value_counts()) 
+
+# Note, if you get an Attribute Error: 'SMOTE' object has no attribute
+# '_validate_data', then downgrade your version of imblearn to 0.6.2
+# or upgrade your version of sklearn to 0.23
 ```
 
     0    213233
@@ -488,7 +454,7 @@ print(pd.Series(y_train_resampled).value_counts())
     
     1    213233
     0    213233
-    dtype: int64
+    Name: Class, dtype: int64
 
 
 Similar to what you did above, build models with this resampled training data: 
@@ -536,71 +502,71 @@ plt.show()
 
     LogisticRegression(C=0.005, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 0.005: 0.9625898023878525
+    AUC for 0.005: 0.9621289496637686
     -------------------------------------------------------
     LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 0.1: 0.9631014180805266
+    AUC for 0.1: 0.9626715155266687
     -------------------------------------------------------
     LogisticRegression(C=0.2, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 0.2: 0.9626166493158137
+    AUC for 0.2: 0.9626709293492024
     -------------------------------------------------------
     LogisticRegression(C=0.5, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 0.5: 0.9630997767836209
+    AUC for 0.5: 0.9626710465846957
     -------------------------------------------------------
     LogisticRegression(C=0.8, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 0.8: 0.9630995423126343
+    AUC for 0.8: 0.9621488796976263
     -------------------------------------------------------
     LogisticRegression(C=1, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 1: 0.963099425077141
+    AUC for 1: 0.9626708121137091
     -------------------------------------------------------
     LogisticRegression(C=1.25, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 1.25: 0.9626174699642667
+    AUC for 1.25: 0.9626709293492024
     -------------------------------------------------------
     LogisticRegression(C=1.5, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 1.5: 0.9626174699642667
+    AUC for 1.5: 0.9626710465846956
     -------------------------------------------------------
     LogisticRegression(C=2, class_weight=None, dual=False, fit_intercept=False,
                        intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='warn', n_jobs=None, penalty='l2',
+                       multi_class='auto', n_jobs=None, penalty='l2',
                        random_state=None, solver='liblinear', tol=0.0001, verbose=0,
                        warm_start=False)
-    AUC for 2: 0.9626174699642667
+    AUC for 2: 0.9626710465846957
     -------------------------------------------------------
 
 
 
-![png](index_files/index_21_1.png)
+![png](index_files/index_20_1.png)
 
 
 ## Something wrong here? 
@@ -659,27 +625,27 @@ plt.show()
     ---------------------------------
     1    284315
     0    284315
-    dtype: int64
+    Name: Class, dtype: int64
     ----------------------------------------------
-    AUC for 0.005: 0.9905878318559554
+    AUC for 0.005: 0.9890441458685701
     ----------------------------------------------
-    AUC for 0.1: 0.9905904236112418
+    AUC for 0.1: 0.9890462910834622
     ----------------------------------------------
-    AUC for 0.2: 0.9905904928883422
+    AUC for 0.2: 0.9890463490782917
     ----------------------------------------------
-    AUC for 0.3: 0.9905905122859303
+    AUC for 0.3: 0.9890463670903378
     ----------------------------------------------
-    AUC for 0.5: 0.9905905352463408
+    AUC for 0.5: 0.989046379956085
     ----------------------------------------------
-    AUC for 0.6: 0.9905905427678545
+    AUC for 0.6: 0.9890463809457579
     ----------------------------------------------
-    AUC for 0.7: 0.9905905435595926
+    AUC for 0.7: 0.9890463858941221
     ----------------------------------------------
-    AUC for 0.8: 0.9905905451430693
+    AUC for 0.8: 0.9890463902486827
 
 
 
-![png](index_files/index_23_1.png)
+![png](index_files/index_22_1.png)
 
 
 ## Your response here
@@ -687,9 +653,9 @@ plt.show()
 
 ```python
 
-# This ROC curve is misleading because the test set was also manipulated using SMOTE. 
-# This produces results that will not be comparable to future cases as we have synthetically created test cases. 
-# SMOTE should only be applied to training sets, and then from there, an accurate gauge can be made on the model's performance 
+# This ROC curve is misleading because the test set was also manipulated using SMOTE.
+# This produces results that will not be comparable to future cases as we have synthetically created test cases.
+# SMOTE should only be applied to training sets, and then from there, an accurate gauge can be made on the model's performance
 # by using a raw test sample that has not been oversampled or undersampled.
 ```
 
