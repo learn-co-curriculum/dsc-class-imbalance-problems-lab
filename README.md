@@ -1,4 +1,3 @@
-
 # Class Imbalance Problems - Lab
 
 ## Introduction
@@ -124,7 +123,7 @@ df.head()
   </thead>
   <tbody>
     <tr>
-      <td>0</td>
+      <th>0</th>
       <td>0.0</td>
       <td>-1.359807</td>
       <td>-0.072781</td>
@@ -148,7 +147,7 @@ df.head()
       <td>0</td>
     </tr>
     <tr>
-      <td>1</td>
+      <th>1</th>
       <td>0.0</td>
       <td>1.191857</td>
       <td>0.266151</td>
@@ -172,7 +171,7 @@ df.head()
       <td>0</td>
     </tr>
     <tr>
-      <td>2</td>
+      <th>2</th>
       <td>1.0</td>
       <td>-1.358354</td>
       <td>-1.340163</td>
@@ -196,7 +195,7 @@ df.head()
       <td>0</td>
     </tr>
     <tr>
-      <td>3</td>
+      <th>3</th>
       <td>1.0</td>
       <td>-0.966272</td>
       <td>-0.185226</td>
@@ -220,7 +219,7 @@ df.head()
       <td>0</td>
     </tr>
     <tr>
-      <td>4</td>
+      <th>4</th>
       <td>2.0</td>
       <td>-1.158233</td>
       <td>0.877737</td>
@@ -388,11 +387,13 @@ plt.legend(loc='lower right')
 plt.show()
 ```
 
-    AUC: 0.8841414375885128
+    AUC: 0.8841412031175263
 
 
 
+    
 ![png](index_files/index_18_1.png)
+    
 
 
 Use scikit-learn's `plot_confusion_matrix` function to plot the confusion matrix of the test set: 
@@ -415,7 +416,9 @@ plt.show()
 ```
 
 
+    
 ![png](index_files/index_21_0.png)
+    
 
 
 ## Tune the model 
@@ -505,52 +508,30 @@ plt.legend(loc='lower right')
 plt.show()
 ```
 
-    LogisticRegression(C=0.001, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
+    LogisticRegression(C=0.001, fit_intercept=False, solver='liblinear')
     AUC for 0.001: 0.8397641690817178
     -------------------------------------------------------
-    LogisticRegression(C=0.01, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
+    LogisticRegression(C=0.01, fit_intercept=False, solver='liblinear')
     AUC for 0.01: 0.8817812526377986
     -------------------------------------------------------
-    LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
+    LogisticRegression(C=0.1, fit_intercept=False, solver='liblinear')
     AUC for 0.1: 0.8839373305947121
     -------------------------------------------------------
-    LogisticRegression(C=1, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 1: 0.8841414375885128
+    LogisticRegression(C=1, fit_intercept=False, solver='liblinear')
+    AUC for 1: 0.8841412031175263
     -------------------------------------------------------
-    LogisticRegression(C=10, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
+    LogisticRegression(C=10, fit_intercept=False, solver='liblinear')
     AUC for 10: 0.8841610159158905
     -------------------------------------------------------
-    LogisticRegression(C=100, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 100: 0.8841628916837829
+    LogisticRegression(C=100, fit_intercept=False, solver='liblinear')
+    AUC for 100: 0.8841630089192762
     -------------------------------------------------------
 
 
 
+    
 ![png](index_files/index_24_1.png)
+    
 
 
 ### SMOTE
@@ -667,73 +648,39 @@ plt.legend(loc='lower right')
 plt.show()
 ```
 
-    LogisticRegression(C=0.005, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.005: 0.9621289496637686
+    LogisticRegression(C=0.005, fit_intercept=False, solver='liblinear')
+    AUC for 0.005: 0.9626324761074065
     -------------------------------------------------------
-    LogisticRegression(C=0.1, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.1: 0.9626715155266687
+    LogisticRegression(C=0.1, fit_intercept=False, solver='liblinear')
+    AUC for 0.1: 0.9626549853221162
     -------------------------------------------------------
-    LogisticRegression(C=0.2, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.2: 0.9626709293492024
+    LogisticRegression(C=0.2, fit_intercept=False, solver='liblinear')
+    AUC for 0.2: 0.9626553370285961
     -------------------------------------------------------
-    LogisticRegression(C=0.5, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.5: 0.9626710465846957
+    LogisticRegression(C=0.5, fit_intercept=False, solver='liblinear')
+    AUC for 0.5: 0.9632037646661602
     -------------------------------------------------------
-    LogisticRegression(C=0.8, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 0.8: 0.9621488796976263
+    LogisticRegression(C=0.8, fit_intercept=False, solver='liblinear')
+    AUC for 0.8: 0.9632035301951738
     -------------------------------------------------------
-    LogisticRegression(C=1, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 1: 0.9626708121137091
+    LogisticRegression(C=1, fit_intercept=False, solver='liblinear')
+    AUC for 1: 0.9632034129596805
     -------------------------------------------------------
-    LogisticRegression(C=1.25, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 1.25: 0.9626709293492024
+    LogisticRegression(C=1.25, fit_intercept=False, solver='liblinear')
+    AUC for 1.25: 0.9626555714995827
     -------------------------------------------------------
-    LogisticRegression(C=1.5, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 1.5: 0.9626710465846956
+    LogisticRegression(C=1.5, fit_intercept=False, solver='liblinear')
+    AUC for 1.5: 0.9632034129596804
     -------------------------------------------------------
-    LogisticRegression(C=2, class_weight=None, dual=False, fit_intercept=False,
-                       intercept_scaling=1, l1_ratio=None, max_iter=100,
-                       multi_class='auto', n_jobs=None, penalty='l2',
-                       random_state=None, solver='liblinear', tol=0.0001, verbose=0,
-                       warm_start=False)
-    AUC for 2: 0.9626710465846957
+    LogisticRegression(C=2, fit_intercept=False, solver='liblinear')
+    AUC for 2: 0.9632034129596804
     -------------------------------------------------------
 
 
 
+    
 ![png](index_files/index_30_1.png)
+    
 
 
 ## Something wrong here? 
@@ -791,7 +738,7 @@ plt.show()
 # __SOLUTION__ 
 # Previous original class distribution
 print(y.value_counts()) 
-X_resampled, y_resampled = SMOTE().fit_sample(X, y) 
+X_resampled, y_resampled = SMOTE().fit_resample(X, y) 
 # Preview synthetic sample class distribution
 print('---------------------------------')
 print(pd.Series(y_resampled).value_counts()) 
@@ -842,25 +789,27 @@ plt.show()
     0    284315
     Name: Class, dtype: int64
     ----------------------------------------------
-    AUC for 0.005: 0.9890441458685701
+    AUC for 0.005: 0.9896247293367446
     ----------------------------------------------
-    AUC for 0.1: 0.9890462910834622
+    AUC for 0.1: 0.9896269412555874
     ----------------------------------------------
-    AUC for 0.2: 0.9890463490782917
+    AUC for 0.2: 0.9896269970731367
     ----------------------------------------------
-    AUC for 0.3: 0.9890463670903378
+    AUC for 0.3: 0.9896270125120333
     ----------------------------------------------
-    AUC for 0.5: 0.989046379956085
+    AUC for 0.5: 0.9896270309199485
     ----------------------------------------------
-    AUC for 0.6: 0.9890463809457579
+    AUC for 0.6: 0.9896270332951634
     ----------------------------------------------
-    AUC for 0.7: 0.9890463858941221
+    AUC for 0.7: 0.9896270455671069
     ----------------------------------------------
-    AUC for 0.8: 0.9890463902486827
+    AUC for 0.8: 0.9896270390352662
 
 
 
+    
 ![png](index_files/index_33_1.png)
+    
 
 
 ## Your response here
