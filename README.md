@@ -15,7 +15,7 @@ You will be able to:
 ## Predicting credit card fraud
 
 
-The following cell loads all the functions you will be using in this lab. All you need to do is run it: 
+The following cell loads all the functions you will be using in this lab. All you need to do is run it is the following. (N.B. You made need to pip/conda install `imbalanced-learn`.)
 
 
 ```python
@@ -27,7 +27,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 from sklearn.metrics import roc_curve, auc
-from sklearn.metrics import confusion_matrix, plot_confusion_matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 from imblearn.over_sampling import SMOTE, ADASYN
 
@@ -109,7 +109,14 @@ plt.figure(figsize=(10, 8))
 
 ```
 
-Use scikit-learn's `plot_confusion_matrix` function to plot the confusion matrix of the test set: 
+Use the `pred` function on the test set and name the predictions `pred`.
+
+
+```python
+# Pred
+```
+
+Use scikit-learn's `ConfusionMatrixDisplay` function to plot the confusion matrix of the test set: 
 
 
 ```python
