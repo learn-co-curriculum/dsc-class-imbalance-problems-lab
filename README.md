@@ -15,7 +15,7 @@ You will be able to:
 ## Predicting credit card fraud
 
 
-The following cell loads all the functions you will be using in this lab. All you need to do is run it: 
+The following cell loads all the functions you will be using in this lab. All you need to do is run it is the following. (N.B. You made need to pip/conda install `imbalanced-learn`.)
 
 
 ```python
@@ -27,7 +27,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 from sklearn.metrics import roc_curve, auc
-from sklearn.metrics import confusion_matrix, plot_confusion_matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 from imblearn.over_sampling import SMOTE, ADASYN
 
@@ -47,7 +47,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 from sklearn.metrics import roc_curve, auc
-from sklearn.metrics import confusion_matrix, plot_confusion_matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 from imblearn.over_sampling import SMOTE, ADASYN
 
@@ -271,9 +271,10 @@ df['Class'].value_counts()
 
 
 
+    Class
     0    284315
     1       492
-    Name: Class, dtype: int64
+    Name: count, dtype: int64
 
 
 
@@ -318,14 +319,16 @@ print('\n')
 print(y_test.value_counts())
 ```
 
+    Class
     0    213233
     1       372
-    Name: Class, dtype: int64
+    Name: count, dtype: int64
     
     
+    Class
     0    71082
     1      120
-    Name: Class, dtype: int64
+    Name: count, dtype: int64
 
 
 ## Create an initial model
@@ -387,7 +390,7 @@ plt.legend(loc='lower right')
 plt.show()
 ```
 
-    AUC: 0.8841412031175263
+    AUC: 0.884141085882033
 
 
 
@@ -396,7 +399,21 @@ plt.show()
     
 
 
-Use scikit-learn's `plot_confusion_matrix` function to plot the confusion matrix of the test set: 
+Use the `pred` function on the test set and name the predictions `pred`.
+
+
+```python
+# Pred
+```
+
+
+```python
+# __SOLUTION__
+# Pred
+pred = logreg.predict(X_test)
+```
+
+Use scikit-learn's `ConfusionMatrixDisplay` function to plot the confusion matrix of the test set: 
 
 
 ```python
@@ -408,16 +425,16 @@ Use scikit-learn's `plot_confusion_matrix` function to plot the confusion matrix
 ```python
 # __SOLUTION__
 # Plot confusion matrix of the test set
-plot_confusion_matrix(logreg, X_test, y_test,
-                      display_labels=["not fraud", "fraud"],
-                      values_format=".5g")
+cm = confusion_matrix(y_test, pred, labels=logreg.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=logreg.classes_)
+disp.plot()
 plt.grid(False) # removes the annoying grid lines from plot
 plt.show()
 ```
 
 
     
-![png](index_files/index_21_0.png)
+![png](index_files/index_24_0.png)
     
 
 
@@ -512,25 +529,25 @@ plt.show()
     AUC for 0.001: 0.8397641690817178
     -------------------------------------------------------
     LogisticRegression(C=0.01, fit_intercept=False, solver='liblinear')
-    AUC for 0.01: 0.8817812526377986
+    AUC for 0.01: 0.8817811354023053
     -------------------------------------------------------
     LogisticRegression(C=0.1, fit_intercept=False, solver='liblinear')
     AUC for 0.1: 0.8839373305947121
     -------------------------------------------------------
     LogisticRegression(C=1, fit_intercept=False, solver='liblinear')
-    AUC for 1: 0.8841412031175263
+    AUC for 1: 0.884141085882033
     -------------------------------------------------------
     LogisticRegression(C=10, fit_intercept=False, solver='liblinear')
     AUC for 10: 0.8841610159158905
     -------------------------------------------------------
     LogisticRegression(C=100, fit_intercept=False, solver='liblinear')
-    AUC for 100: 0.8841630089192762
+    AUC for 100: 0.8841631261547696
     -------------------------------------------------------
 
 
 
     
-![png](index_files/index_24_1.png)
+![png](index_files/index_27_1.png)
     
 
 
@@ -569,14 +586,16 @@ print(pd.Series(y_train_resampled).value_counts())
 # or upgrade your version of sklearn to 0.23
 ```
 
+    Class
     0    213233
     1       372
-    Name: Class, dtype: int64
+    Name: count, dtype: int64
     
     
-    1    213233
+    Class
     0    213233
-    Name: Class, dtype: int64
+    1    213233
+    Name: count, dtype: int64
 
 
 Similar to what you did above, build models with this resampled training data: 
@@ -649,37 +668,37 @@ plt.show()
 ```
 
     LogisticRegression(C=0.005, fit_intercept=False, solver='liblinear')
-    AUC for 0.005: 0.9626324761074065
+    AUC for 0.005: 0.9620145278223273
     -------------------------------------------------------
     LogisticRegression(C=0.1, fit_intercept=False, solver='liblinear')
-    AUC for 0.1: 0.9626549853221162
+    AUC for 0.1: 0.9620355129756244
     -------------------------------------------------------
     LogisticRegression(C=0.2, fit_intercept=False, solver='liblinear')
-    AUC for 0.2: 0.9626553370285961
+    AUC for 0.2: 0.962036216388584
     -------------------------------------------------------
     LogisticRegression(C=0.5, fit_intercept=False, solver='liblinear')
-    AUC for 0.5: 0.9632037646661602
+    AUC for 0.5: 0.9625898023878525
     -------------------------------------------------------
     LogisticRegression(C=0.8, fit_intercept=False, solver='liblinear')
-    AUC for 0.8: 0.9632035301951738
+    AUC for 0.8: 0.9620366853305572
     -------------------------------------------------------
     LogisticRegression(C=1, fit_intercept=False, solver='liblinear')
-    AUC for 1: 0.9632034129596805
+    AUC for 1: 0.9620368025660505
     -------------------------------------------------------
     LogisticRegression(C=1.25, fit_intercept=False, solver='liblinear')
-    AUC for 1.25: 0.9626555714995827
+    AUC for 1.25: 0.9625894506813726
     -------------------------------------------------------
     LogisticRegression(C=1.5, fit_intercept=False, solver='liblinear')
-    AUC for 1.5: 0.9632034129596804
+    AUC for 1.5: 0.9620368025660505
     -------------------------------------------------------
     LogisticRegression(C=2, fit_intercept=False, solver='liblinear')
-    AUC for 2: 0.9632034129596804
+    AUC for 2: 0.9620368025660505
     -------------------------------------------------------
 
 
 
     
-![png](index_files/index_30_1.png)
+![png](index_files/index_33_1.png)
     
 
 
@@ -781,35 +800,25 @@ plt.legend(loc='lower right')
 plt.show()
 ```
 
+    Class
     0    284315
     1       492
-    Name: Class, dtype: int64
+    Name: count, dtype: int64
     ---------------------------------
-    1    284315
+    Class
     0    284315
-    Name: Class, dtype: int64
+    1    284315
+    Name: count, dtype: int64
     ----------------------------------------------
-    AUC for 0.005: 0.9896247293367446
+    AUC for 0.005: 0.9895478996470578
     ----------------------------------------------
-    AUC for 0.1: 0.9896269412555874
+    AUC for 0.1: 0.9895500262561001
     ----------------------------------------------
-    AUC for 0.2: 0.9896269970731367
+    AUC for 0.2: 0.9895500789066963
     ----------------------------------------------
-    AUC for 0.3: 0.9896270125120333
+    AUC for 0.3: 0.989550088803425
     ----------------------------------------------
-    AUC for 0.5: 0.9896270309199485
-    ----------------------------------------------
-    AUC for 0.6: 0.9896270332951634
-    ----------------------------------------------
-    AUC for 0.7: 0.9896270455671069
-    ----------------------------------------------
-    AUC for 0.8: 0.9896270390352662
-
-
-
-    
-![png](index_files/index_33_1.png)
-    
+    AUC for 0.5: 0.9895501024609104
 
 
 ## Your response here
