@@ -220,7 +220,7 @@ Describe what is misleading about the AUC score and ROC curves produced by this 
 ```python
 # Previous original class distribution
 print(y.value_counts()) 
-X_resampled, y_resampled = SMOTE().fit_sample(X, y) 
+X_resampled, y_resampled = SMOTE().fit_resample(X, y) 
 # Preview synthetic sample class distribution
 print('---------------------------------')
 print(pd.Series(y_resampled).value_counts()) 
